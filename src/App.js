@@ -1,23 +1,29 @@
-import logo from './logo.svg';
+import { Link, Route, Routes } from 'react-router-dom';
 import './App.css';
+import Board from './components/Board';
+import Profile from './components/Profile';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">홈페이지로 이동</Link>
+            {/* a 태그쓰면 깜빡거림 */}
+          </li>
+          <li>
+            <Link to="/profile">프로필 페이지로 이동</Link>
+          </li>
+          <li>
+            <Link to="/board">게시판 페이지로 이동</Link>
+          </li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/board" element={<Board />} />
+      </Routes>
     </div>
   );
 }
