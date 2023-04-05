@@ -5,14 +5,14 @@ const initState = {
   survey: [
     {
       question:
-        '퇴근 직전에 동료로부터 개발자 모임에 초대를 받은 나!\n\n퇴근 시간에 나는?',
+        '퇴근 직전에 동료로부터\n개발자 모임에 초대를 받은 나!\n퇴근 시간에 나는?',
       answer: [
         {
-          text: '그런 모입을 왜 이제서야 알려 준거야! 당장 모임으로 출발한다',
+          text: '그런 모임을 왜 이제서야 알려 준거야!\n당장 모임으로 출발한다.',
           result: 'E',
         },
         {
-          text: '1년 전에 알려줬어도 안갔을 건데 뭔... 더 빠르게 집으로 간다',
+          text: '1년 전에 알려줬어도 안갔을 건데 뭔;\n더 빠르게 집으로 간다.',
           result: 'I',
         },
       ],
@@ -138,6 +138,45 @@ const CHECK = 'mbti/CHECK';
 const NEXT = 'mbti/NEXT';
 const RESET = 'mbti/RESET';
 
-export default function mbti() {
-  return 0;
+// Action 생성 함수 설정
+export function check(result) {
+  return {
+    type: CHECK,
+    payload: { result },
+  };
+}
+
+export function next() {
+  return {
+    type: NEXT,
+  };
+}
+
+export function reset() {
+  return {
+    type: RESET,
+  };
+}
+
+export default function mbti(state = initState, action) {
+  switch (action.type) {
+    case CHECK:
+      return {
+        ...state,
+        mbtiResult: state.mbtiResult + action.payload.result,
+      };
+    case NEXT:
+      return {
+        ...state,
+        page: state.page + 1,
+      };
+    case RESET:
+      return {
+        ...state,
+        page: 0,
+        mbtiResult: '',
+      };
+    default:
+      return state;
+  }
 }

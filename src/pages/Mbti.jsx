@@ -1,0 +1,44 @@
+import React from 'react';
+import styled from 'styled-components';
+import SkyblueButton from '../components/SkyblueButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { next } from '../store/modules/mbti';
+
+const SurveyQuestion = styled.p`
+  font-size: 1.6em;
+  color: #777;
+`;
+
+const Vs = styled.p`
+  font-size: 2em;
+  padding-top: 1em;
+`;
+
+export default function Mbti() {
+  const survey = useSelector((state) => state.mbti.survey);
+  const page = useSelector((state) => state.mbti.page);
+
+  const dispatch = useDispatch();
+
+  return (
+    <>
+      <SurveyQuestion>{survey[page - 1].question}</SurveyQuestion>
+      {/* 왜 -1 하는지?  */}
+      <ul>
+        {survey[page - 1].answer.map((el, index) => {
+          return (
+            <li key={index}>
+              <SkyblueButton
+                text={el.text}
+                clickEvent={() => {
+                  dispatch(next);
+                }}
+              />
+              {index === 0 && <Vs>VS</Vs>}
+            </li>
+          );
+        })}
+      </ul>
+    </>
+  );
+}
