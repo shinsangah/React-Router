@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { create, done } from '../store/modules/todo';
 
 export default function TodoList() {
-  const todoList = useSelector((state) => state.todo.todoList);
+  const todoList = useSelector((state) => state.todo.todoList).filter(
+    (el) => el.done === false,
+  );
+
+  const nextID = useSelector((state) => state.todo.nextID);
+
   const dispatch = useDispatch();
 
   const inputRef = useRef();
@@ -15,10 +20,9 @@ export default function TodoList() {
         <input type="text" ref={inputRef} />
         <button
           onClick={() => {
-            dispatch(
-              create({ id: todoList.length, text: inputRef.current.value }),
-            );
+            dispatch(create({ id: nextID, text: inputRef.current.value }));
             inputRef.current.value = '';
+            // 버튼을 클릭하면 입력창 자체가 비워져야 해서 '';
           }}
         >
           추가
