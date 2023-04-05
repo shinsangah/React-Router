@@ -26,7 +26,10 @@ export default function TodoList() {
       </div>
       <ul>
         {todoList.map((el) => (
-          <li key={el.id}>{el.text}</li>
+          <li key={el.id}>
+            {el.text}{' '}
+            <button onClick={() => dispatch(done(el.id))}>완료</button>
+          </li>
         ))}
       </ul>
     </section>
