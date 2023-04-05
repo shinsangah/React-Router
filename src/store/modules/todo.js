@@ -23,6 +23,10 @@ const initState = {
   todoListCount: 3,
 };
 
+// 바뀔 수 있으니까 let 으로 설정
+let counts = initState.todoList.length;
+initState['nextID'] = counts;
+
 // 액션 타입 정의하기
 const CREATE = 'todo/CREATE';
 const DONE = 'todo/DONE';
@@ -49,11 +53,21 @@ export default function todo(state = initState, action) {
         ...state,
         // 전개구문의 힘, 얘는 안전하기 위해서도 무조건 추가해줘야 함
         // redux 짤 때 무지성으로 넣고 시작하는게 정신건강에 좋음
-        todoList: state.todoList.concat({
-          id: action.payload.id,
-          text: action.payload.text,
-          done: false,
-        }),
+        // todoList: state.todoList.concat({
+        //   id: action.payload.id,
+        //   text: action.payload.tet,
+        //   done: false,
+        // }),
+        todoList: [
+          ...state.todoList,
+          {
+            id: action.payload.id,
+            text: action.payload.text,
+            done: false,
+          },
+        ],
+        // 위의  배열을 리턴해주는거니까 [], 배열 뒤에다 새로운 객체 추가
+        nextID: action.payload.id + 1,
       };
     case DONE:
       // 완료 버튼 눌렀을 때 호출시켜줘야 함
