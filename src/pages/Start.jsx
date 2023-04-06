@@ -35,7 +35,7 @@ export default function Start() {
     const resGetCounts = await fetch('http://localhost:4000/data/getCount');
     if (resGetCounts.status === 200) {
       const countData = await resGetCounts.json();
-      console.log(countData);
+      setCounts((cur) => countData.counts);
     } else {
       console.log(await resGetCounts.json());
     }
